@@ -29,7 +29,7 @@ col_0purple="#d3869b";
 col_0aqua="#8ec07c";
 
 # Aesthetic parameters
-FONT="iosevika:pixelsize=16:antialias=true:autohint=true"
+FONT="iosevika:pixelsize=14:antialias=true:autohint=true"
 NB=$col_bg0
 NF=$col_fg0
 SB=$col_bg0
@@ -48,6 +48,8 @@ function test_run {
 		workpath+="/$dir"
 	done
 
+	echo $workpath
+	echo ${#appendix[@]}
 	unset -v contents
 	unset -v options
 	contents=($(ls $workpath))
@@ -93,54 +95,3 @@ function test_run {
 #test_run
 while test_run; do :; done
 
-
-#LEGACY
-
-function menu_run 
-{
-#	declare -A opts
-#	opts=$1	
-
-	unset -v optstring
-	for key in "${!opts[@]}"
-	do
-		optstring+="$key\n"
-	done
-	optstring+="back"
-	choice="$(echo -e $optstring | dmenu $params)"
-	if [ "$choice" = "back" ]
-	then
-		return 1
-	fi
-	${opts[$choice]}
-}
-
-
-function test_menu
-{
-	unset -v opts
-	declare -A opts
-	opts[vasya]='xsetroot -name Vasya'
-	opts[petya]='xsetroot -name Petya'
-	
-	menu_run
-	main_menu
-}
-
-
-### PRIMARY MENU
-function main_menu
-{
-	unset -v opts
-	declare -A opts
-	opts["some test features menu"]='test_menu'
-	opts["open qmenu directory"]='st -e ranger /home/m4x0n/.qmenu'
-
-	menu_run
-}
-
-function main
-{	
-	main_menu
-#	while main_menu; do :; done
-}
